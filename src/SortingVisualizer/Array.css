@@ -1,0 +1,13 @@
+
+.arryContainer{
+    position: absolute;
+    right: 100px;
+    height: 100vh;
+ }
+ .arrayBar{
+     width: 2px;
+     /* flex: 0.5; */
+     background-color: blue; 
+     display: inline-block;
+     margin: 0 1px;   
+ }

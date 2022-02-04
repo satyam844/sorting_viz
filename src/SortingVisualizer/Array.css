@@ -1,13 +1,19 @@
 
-.arryContainer{
-    position: absolute;
-    right: 100px;
-    height: 100vh;
- }
+  .arrayContainer{
+  /* position: absolute; */
+left: 100px;
+ } 
+  /* .arrayBar{ */
+     /* width: 20px;  */
+     /* flex: 0.5; */
+     /* background-color: pink; */
+     /* display: inline-block; */
+     /* margin: 0 1px;    */
+ /* }  */
+
  .arrayBar{
      width: 2px;
-     /* flex: 0.5; */
-     background-color: blue; 
+     background-color:turquoise;
      display: inline-block;
-     margin: 0 1px;   
+     margin: 0 2px;
  }

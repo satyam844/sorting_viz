@@ -1,0 +1,33 @@
+/*  ~createColor
+ function createColor(tempElements,delay,action){
+  switch(action){
+    case "Done" :
+       const newDoneElements =[...tempElements];
+       setTimeout(function(){
+         setDoneElements([...newDoneElements]);
+       },delay);
+       break;
+       case "Compare" :
+         setTimeout(function(){
+           setCompareElements([...tempElements])
+         },delay);
+         break;
+         default:
+           setTimeout(function(){
+             setCompareElements([]);
+           },delay);
+  }
+  }
+*/
+
+/* ~createAnimation
+ function createAnimation(tempArray,indexOne,indexTwo,delay){
+    const temp = tempArray[indexOne];;
+    tempArray[indexOne] = tempArray[indexTwo];
+    tempArray[indexTwo] = temp;
+    const newArray = [...tempArray];
+    setTimeout(() => {
+      setArr([...newArray]);
+    },delay);
+  }
+*/

@@ -4,63 +4,87 @@ import "./SortingVisualizer.css";
 import Array from "./Array";
 import  bubbleSort  from '../SortingAlgorithm/bubbleSort';
 import Header from './Header.js';
-import { set } from 'mongoose';
+
 function SortingVisualizer() {
+  const randomIntFormInterval = (min,max) =>{
+    return Math.floor(Math.random()*(max-min + 1) + min);
+  }
 
- const oldArr = [];
- for(var i=0;i<300;i++){
- oldArr.push(Math.floor(Math.random()*995)+5);
- }
-  const [arr,setArr] = useState(oldArr);
-  const [doneElements,setDoneElements] = useState([]);
-  const [compareElements,setCompareElements] = useState([]);
+  const [arr,setArr] = useState([]);
+  const [length,setLength] = useState(50);
+  const [speed,setSpeed] = useState(250)
+  const [compare,setCompare] = useState([]);
+  const [swap,setSwap] = useState([]); 
+  const [sortedIndex,setSortedIndex] = useState([]);
+  const [sorting,setSorting] = useState(false);
+  const [completed,setCompleted] = useState(true);
 
-  function createColor(tempElements,delay,action){
-  switch(action){
-    case "Done" :
-       const newDoneElements =[...tempElements];
-       setTimeout(function(){
-         setDoneElements([...newDoneElements]);
-       },delay);
-       break;
-       case "Compare" :
-         setTimeout(function(){
-           setCompareElements([...tempElements])
-         },delay);
-         break;
-         default:
-           setTimeout(function(){
-             setCompareElements([]);
-           },delay);
-  }
-  }
-  function createAnimation(tempArray,indexOne,indexTwo,delay){
-    const temp = tempArray[indexOne];;
-    tempArray[indexOne] = tempArray[indexTwo];
-    tempArray[indexTwo] = temp;
-    const newArray = [...tempArray];
-    setTimeout(() => {
-      setArr([...newArray]);
-    },delay);
-  }
+function handleSort(order){
+  
+  setSorting(true);
+  (function loop(i) {
+    setTimeout(function () {
+      const [j, k, array, index] = order[i]
+      
+    //  console.log("j = "+j +" k = "+k+"Comparing");
+      setCompare(()=> {
+        return [j,k];
+      });
+      // console.log(compare);
+      setSwap([]);
+
+      if(index !== null){
+        setSortedIndex((prevState) => (
+          [...prevState, index]
+        ))
+      }
+      if(array){   
+        setArr(array)
+        if(j !== null || k !== null)
+       setSwap(()=>{
+         return [j,k];
+       })
+      //  console.log(swap);
+      }
+      if (++i < order.length){
+        loop(i)
+      } else {
+        setSorting(false)
+        setCompleted(true)
+      }   
+    }, speed)
+  })(0)
+     }
 
   function generateNewArray(){
+     setCompleted(false);
+     setSorting(false);
+     setSortedIndex([]);
     console.log("Generate new array...");
-    const newArray = [];
-    for(var i=0;i<300;i++){
-      newArray.push(Math.floor(Math.random()*955)+5);
-    }
-    setArr(newArray);
+  const temp = [];
+  for(var i=0;i<length;i++){
+  temp.push(randomIntFormInterval(5,1000));
+  }
+  // console.log(temp)
+  setArr([...temp]);
   }
   function handleBubbleSort(){
-   bubbleSort(arr,setArr,doneElements,setDoneElements);
+   bubbleSort(arr,setArr);
   }
   
-  return <div className="arryContainer">
+  return <div>
   
-    <Array array={arr} />
+      <Array 
+      array={arr} 
+     compare={compare}
+     swap={swap}
+     sorted={sortedIndex}
+     sorting={sorting}
+      />
      <Header generateArray={generateNewArray}
        bubbleSort={handleBubbleSort}
+       array={arr}
+       handleSort={handleSort}
       />
   </div>;
 }
